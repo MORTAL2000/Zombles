@@ -6,11 +6,16 @@
 
 class Map : public Entity
 {
-
 public:
+	// Public members of the entity
+	irr::scene::IMeshSceneNode *node;
+	irr::scene::ITriangleSelector *selector;
+	// Constructor
 	Map(World *world, const std::string &path, irr::core::vector3df position, irr::core::vector3df rotation);
+	// Deconstructor
 	~Map();
 private:
+	// Loads the map.
 	void load_map(const std::string& pkg_path, const std::string& bsp_path);
 };
 

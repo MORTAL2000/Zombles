@@ -1,6 +1,7 @@
 #ifndef ZOMBLE_UTILITY_H_
 #define ZOMBLE_UTILITY_H_
 
+#include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -20,13 +21,14 @@ static inline irr::core::vector3df str_to_vec3df(const std::string& str)
 	std::vector<float> vec;
 	std::stringstream ss(str);
 	float elem;
-
 	while (ss >> elem)
 	{
 		vec.push_back(elem);
 		if (ss.peek() == ',') ss.ignore();
 	}
-	if (vec.size() == 3) return irr::core::vector3df(vec[0], vec[1], vec[2]);
+	if (vec.size() == 3) {
+		return irr::core::vector3df(vec[0], vec[1], vec[2]);
+	}
 	return irr::core::vector3df();
 }
 

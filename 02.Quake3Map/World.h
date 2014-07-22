@@ -4,17 +4,20 @@
 #include <algorithm>
 #include <vector>
 #include <irrlicht.h>
+#include <map>
+
 
 class Entity;
 
 class World
 {
-	std::vector<Entity*> entities;
 public:
 	// Irrlicht components
 	irr::IrrlichtDevice *device;
 	irr::video::IVideoDriver *driver;
 	irr::scene::ISceneManager *smgr;
+	// Make the entities public as well.
+	std::map<std::string, std::vector<Entity*>> entities;
 
 	// Constructor
 	World(const std::string& file_path);

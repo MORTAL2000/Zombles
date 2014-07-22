@@ -21,6 +21,14 @@ World::World(const std::string& file_path)
 	std::fstream fin(file_path);
 	std::string command;
 
+	// Insert all of the entities we will need.
+	entities.insert(std::make_pair("player", std::vector<Entity*>()));
+	entities.insert(std::make_pair("map", std::vector<Entity*>()));
+	entities.insert(std::make_pair("zombie", std::vector<Entity*>()));
+	entities.insert(std::make_pair("item", std::vector<Entity*>()));
+
+
+
 	// Iterate over each line in the file.
 	std::cout << "* Constructing World" << std::endl;
 	while (std::getline(fin, command)) {
@@ -33,20 +41,16 @@ World::World(const std::string& file_path)
 			std::cout << " -> Entity - Type: " << tokens[0] << " File: " << tokens[1] << " Position: " << tokens[2] << " Rotation: " << tokens[3] << std::endl;
 			
 			// Construct the entity, and create position and rotation values.
-			Entity *entity = nullptr; // NULL if using C++98
-			irr::core::vector3df position = str_to_vec3df(tokens[1]);
-			irr::core::vector3df rotation = str_to_vec3df(tokens[2]);
+			irr::core::vector3df position(str_to_vec3df(tokens[2]));
+			irr::core::vector3df rotation(str_to_vec3df(tokens[3]));
 			std::string path = "../../data/";
 			path += tokens[1] + ".txt";
 
 			// Simple dispatcher for each of the valid types.
-			if (tokens[0] == "player")      entity = new Player(this, path, position, rotation);
-			else if (tokens[0] == "item")   entity = new Item(this, path, position, rotation);
-			else if (tokens[0] == "map")    entity = new Map(this, path, position, rotation);
-			else if (tokens[0] == "zombie") entity = new Zombie(this, path, position, rotation);
-
-			// Push the entity in with the entities.
-			entities.push_back(entity);
+			if (tokens[0] == "player")      entities["player"].push_back(new Player(this, path, position, rotation));
+			else if (tokens[0] == "item")   entities["item"].push_back(new Item(this, path, position, rotation));
+			else if (tokens[0] == "map")    entities["map"].push_back(new Map(this, path, position, rotation));
+			else if (tokens[0] == "zombie") entities["zombie"].push_back(new Zombie(this, path, position, rotation));
 		}
 		else
 		{
@@ -66,6 +70,7 @@ void World::setup_engine()
 	device = irr::createDevice(irr::video::EDT_DIRECT3D9, irr::core::dimension2d<irr::u32>(640, 480));
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
+	device->getCursorControl()->setVisible(false);
 }
 
 void World::run() {
