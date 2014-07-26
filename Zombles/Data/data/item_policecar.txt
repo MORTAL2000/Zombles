@@ -1,0 +1,1 @@
+model ../Data/media/policecar.md2 ../Data/media/policecar.tga
