@@ -35,7 +35,7 @@ void Player::camera_setup()
 	irr::scene::IAnimatedMeshMD2 *weapon_mesh = nullptr;
 	irr::scene::IAnimatedMeshSceneNode *weapon_node = nullptr;
 
-	weapon_mesh = (irr::scene::IAnimatedMeshMD2*)world->smgr->getMesh("../../media/gun.md2");
+	weapon_mesh = (irr::scene::IAnimatedMeshMD2*)world->smgr->getMesh("../Data/media/gun.md2");
 	if (weapon_mesh == nullptr) return;
 
 
@@ -47,7 +47,7 @@ void Player::camera_setup()
 		irr::core::vector3df(-90, -90, 90)
 		);
 	weapon_node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	weapon_node->setMaterialTexture(0, world->driver->getTexture("../../media/gun.jpg"));
+	weapon_node->setMaterialTexture(0, world->driver->getTexture("../Data/media/gun.jpg"));
 	weapon_node->setMD2Animation("idle");
 	weapon_node->setLoopMode(true);
 	weapon_node->setName("Quake gun");
